@@ -1,9 +1,18 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿﻿<%@ page import="java.util.Iterator"%>
+<%@ page import="learnbyteaching.guestbook.vo.GuestbookVo"%>
+<%@ page import="java.util.List"%>
+<%@ page import="learnbyteaching.guestbook.dao.GuestbookDaoImpl"%>
+<%@ page import="learnbyteaching.guestbook.dao.GuestbookDao"%>
+<%@ page language="java" 
+	contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 ServletContext context = getServletContext();
 String dbUser = context.getInitParameter("dbUser");
 String dbPass = context.getInitParameter("dbPass");
+
+GuestbookDao dao = new GuestbookDaoImpl(dbUser, dbPass);
+List<GuestbookVo> list = dao.getList();
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -15,7 +24,7 @@ String dbPass = context.getInitParameter("dbPass");
 </head>
 <body>
 <div class="container mt-5">
-    <form action="" method="">
+    <form action="add.jsp" method="POST">
         <div class="mb-3">
             <label for="name" class="form-label">이름</label>
             <input type="text" class="form-control" id="name" name="name">
@@ -34,25 +43,23 @@ String dbPass = context.getInitParameter("dbPass");
     </form>
     <br/>
 
+<%
+Iterator<GuestbookVo> it = list.iterator();
+while (it.hasNext()) {
+	GuestbookVo vo = it.next();
+	%>	
     <div class="card mb-3">
         <div class="card-header">
-            <span>[1]</span> 홍길동 <span class="text-muted">2018-01-15</span>
-            <a href="#" class="btn btn-danger btn-sm float-end">삭제</a>
+            <span>[<%= vo.getNo() %>]</span> <%= vo.getName() %> <span class="text-muted">2018-01-15</span>
+            <a href="deleteform.jsp?no=<%= vo.getNo() %>" class="btn btn-danger btn-sm float-end">삭제</a>
         </div>
         <div class="card-body">
-            <p class="card-text">안녕하세요<br/>첫번째글입니다.</p>
+            <p class="card-text"><%= vo.getContent().replace("\n", "<br />") %></p>
         </div>
     </div>
-
-    <div class="card mb-3">
-        <div class="card-header">
-            <span>[2]</span> 장길산 <span class="text-muted">2018-01-15</span>
-            <a href="#" class="btn btn-danger btn-sm float-end">삭제</a>
-        </div>
-        <div class="card-body">
-            <p class="card-text">안녕하세요<br/>두번째글입니다.</p>
-        </div>
-    </div>
+    <%
+}          		
+%>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

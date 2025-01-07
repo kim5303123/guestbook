@@ -21,6 +21,15 @@ public class GuestbookVo {
 		this.regDate = regDate;
 	}
 
+
+	public GuestbookVo(String name, String password, String content) {
+		super();
+		this.name = name;
+		this.password = password;
+		this.content = content;
+	}
+
+
 	// Getters and Setters
 	public Long getNo() {
 		return no;
