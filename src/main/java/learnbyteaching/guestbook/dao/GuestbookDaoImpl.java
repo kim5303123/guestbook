@@ -33,7 +33,7 @@ public class GuestbookDaoImpl extends BaseDao implements GuestbookDao {
 			rs = stmt.executeQuery(sql);
 			
 			while (rs.next()) {
-				Long no = rs.getLong(1);
+				Integer no = rs.getInt(1);
 				String name = rs.getString(2);
 				String password = rs.getString(3);
 				String content = rs.getString(4);
@@ -70,10 +70,11 @@ public class GuestbookDaoImpl extends BaseDao implements GuestbookDao {
 		try {
 			conn = getConnection();
 			
-			String sql = "INSERT INTO guestbook (name, content) VALUES (?, ?)";
+			String sql = "INSERT INTO guestbook (name, password, content) VALUES (?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getName());
-			pstmt.setString(2, vo.getContent());						
+			pstmt.setString(2, vo.getPassword());			
+			pstmt.setString(3, vo.getContent());						
 			insertedCount = pstmt.executeUpdate();
 		} catch (Exception e) {
 			System.err.println("ERROR:" + e.getMessage());
@@ -89,16 +90,17 @@ public class GuestbookDaoImpl extends BaseDao implements GuestbookDao {
 		return 1 == insertedCount;
 	}
 	@Override
-	public boolean delete(Long no) {
+	public boolean delete(Integer no, String password) {
 		int deletedCount = 0;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			conn = getConnection();
-			String sql = "DELETE FROM guestbook WHERE no=?";
+			String sql = "DELETE FROM guestbook WHERE no=? AND password=?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setLong(1, no);
+			pstmt.setInt(1, no);
+			pstmt.setString(2, password);
 			deletedCount = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

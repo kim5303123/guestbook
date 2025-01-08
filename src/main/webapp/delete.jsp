@@ -7,10 +7,11 @@ ServletContext context = getServletContext();
 String dbUser = context.getInitParameter("dbUser");
 String dbPass = context.getInitParameter("dbPass");
 
-String no = request.getParameter("no");
+Integer no = Integer.valueOf(request.getParameter("no"));
+String password = request.getParameter("password");
 
 GuestbookDao dao = new GuestbookDaoImpl(dbUser, dbPass);
-dao.delete(Long.valueOf(no));
+dao.delete(no, password);
 
 response.sendRedirect("index.jsp");
 %>

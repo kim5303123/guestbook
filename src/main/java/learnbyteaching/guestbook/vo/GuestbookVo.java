@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class GuestbookVo {
 	// Fields
-	private Long no;
+	private Integer no;
 	private String name;
 	private String password;
 	private String content;
@@ -12,7 +12,7 @@ public class GuestbookVo {
 
 	// Constructor
 
-	public GuestbookVo(Long no, String name, String password, String content, Date regDate) {
+	public GuestbookVo(Integer no, String name, String password, String content, Date regDate) {
 		super();
 		this.no = no;
 		this.name = name;
@@ -31,11 +31,11 @@ public class GuestbookVo {
 
 
 	// Getters and Setters
-	public Long getNo() {
+	public Integer getNo() {
 		return no;
 	}
 
-	public void setNo(Long no) {
+	public void setNo(Integer no) {
 		this.no = no;
 	}
 

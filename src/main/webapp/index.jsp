@@ -31,7 +31,7 @@ List<GuestbookVo> list = dao.getList();
         </div>
         <div class="mb-3">
             <label for="pass" class="form-label">비밀번호</label>
-            <input type="password" class="form-control" id="pass" name="pass">
+            <input type="password" class="form-control" id="pass" name="password">
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">내용</label>
