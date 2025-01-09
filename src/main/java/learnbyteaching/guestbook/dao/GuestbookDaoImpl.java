@@ -11,15 +11,14 @@ import java.util.List;
 
 import learnbyteaching.guestbook.vo.GuestbookVo;
 
-public class GuestbookDaoImpl extends BaseDao implements GuestbookDao {
+public class GuestbookDaoImpl 
+	extends BaseDao 
+	implements GuestbookDao {
 
 	//	Constructor
 	public GuestbookDaoImpl(String dbUser, String dbPass) {
 		super(dbUser, dbPass);
-		// TODO Auto-generated constructor stub
 	}
-	
-	
 	@Override
 	public List<GuestbookVo> getList() {
 		List<GuestbookVo> list = new ArrayList<>();
@@ -29,6 +28,7 @@ public class GuestbookDaoImpl extends BaseDao implements GuestbookDao {
 		try {
 			conn = getConnection();
 			String sql = "SELECT no, name, password, content, reg_date FROM guestbook ORDER BY reg_date DESC";
+			
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			
@@ -59,7 +59,6 @@ public class GuestbookDaoImpl extends BaseDao implements GuestbookDao {
 		}
 		return list;
 	}
-	
 	@Override
 	public boolean insert(GuestbookVo vo) {
 		int insertedCount = 0;
@@ -70,11 +69,13 @@ public class GuestbookDaoImpl extends BaseDao implements GuestbookDao {
 		try {
 			conn = getConnection();
 			
-			String sql = "INSERT INTO guestbook (name, password, content) VALUES (?, ?, ?)";
+			String sql = "INSERT INTO guestbook " +
+					"(name, password, content) " +
+					"VALUES (?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getName());
-			pstmt.setString(2, vo.getPassword());			
-			pstmt.setString(3, vo.getContent());						
+			pstmt.setString(2, vo.getPassword());
+			pstmt.setString(3, vo.getContent());
 			insertedCount = pstmt.executeUpdate();
 		} catch (Exception e) {
 			System.err.println("ERROR:" + e.getMessage());
